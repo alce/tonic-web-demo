@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Juan Alvarez <j@yabit.io>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+tonic = { path = "../../tonic/tonic" }
+tonic-grpc-web = { path = "../../tonic/tonic-grpc-web" }
+tokio = { version = "0.2.22", features = ["full"] }
+prost = "0.6.1"
+futures-util = "0.3.5"
+uuid = { version = "0.8.1", features = ["v4"] }
