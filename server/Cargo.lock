@@ -681,6 +681,7 @@ dependencies = [
 [[package]]
 name = "tonic"
 version = "0.3.1"
+source = "git+https://github.com/alce/tonic.git?branch=grpc-web#a2ba7641d293cb092ae60de16aa211cefdba2e0d"
 dependencies = [
  "async-stream",
  "async-trait",
@@ -709,6 +710,7 @@ dependencies = [
 [[package]]
 name = "tonic-grpc-web"
 version = "0.1.0"
+source = "git+https://github.com/alce/tonic.git?branch=grpc-web#a2ba7641d293cb092ae60de16aa211cefdba2e0d"
 dependencies = [
  "base64",
  "bytes",
