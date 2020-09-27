@@ -2,10 +2,14 @@
 pub struct Empty {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Product {
+    /// output only
     #[prost(string, tag = "1")]
     pub id: std::string::String,
     #[prost(string, tag = "2")]
     pub name: std::string::String,
+    /// output only
+    #[prost(message, optional, tag = "3")]
+    pub create_time: ::std::option::Option<::prost_types::Timestamp>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListProductsRequest {}
@@ -16,8 +20,8 @@ pub struct ListProductsResponse {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateProductRequest {
-    #[prost(string, tag = "2")]
-    pub name: std::string::String,
+    #[prost(message, optional, tag = "1")]
+    pub product: ::std::option::Option<Product>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteProductRequest {
@@ -38,7 +42,7 @@ pub mod product_service_server {
         async fn create_product(
             &self,
             request: tonic::Request<super::CreateProductRequest>,
-        ) -> Result<tonic::Response<super::Product>, tonic::Status>;
+        ) -> Result<tonic::Response<super::Empty>, tonic::Status>;
         async fn delete_product(
             &self,
             request: tonic::Request<super::DeleteProductRequest>,
@@ -115,7 +119,7 @@ pub mod product_service_server {
                     impl<T: ProductService> tonic::server::UnaryService<super::CreateProductRequest>
                         for CreateProductSvc<T>
                     {
-                        type Response = super::Product;
+                        type Response = super::Empty;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
@@ -215,6 +219,10 @@ pub struct Event {
     pub product_id: std::string::String,
     #[prost(message, optional, tag = "4")]
     pub product: ::std::option::Option<Product>,
+    #[prost(string, tag = "5")]
+    pub user: std::string::String,
+    #[prost(message, optional, tag = "6")]
+    pub create_time: ::std::option::Option<::prost_types::Timestamp>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SubscribeRequest {}

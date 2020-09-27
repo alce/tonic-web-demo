@@ -12,6 +12,8 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
+goog.object.extend(proto, google_protobuf_timestamp_pb);
 var products_pb = require('./products_pb.js');
 goog.object.extend(proto, products_pb);
 goog.exportSymbol('proto.products.Action', null, global);
@@ -94,7 +96,9 @@ proto.products.Event.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     action: jspb.Message.getFieldWithDefault(msg, 2, 0),
     productId: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    product: (f = msg.getProduct()) && products_pb.Product.toObject(includeInstance, f)
+    product: (f = msg.getProduct()) && products_pb.Product.toObject(includeInstance, f),
+    user: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    createTime: (f = msg.getCreateTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -147,6 +151,15 @@ proto.products.Event.deserializeBinaryFromReader = function(msg, reader) {
       var value = new products_pb.Product;
       reader.readMessage(value,products_pb.Product.deserializeBinaryFromReader);
       msg.setProduct(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUser(value);
+      break;
+    case 6:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setCreateTime(value);
       break;
     default:
       reader.skipField();
@@ -204,6 +217,21 @@ proto.products.Event.serializeBinaryToWriter = function(message, writer) {
       4,
       f,
       products_pb.Product.serializeBinaryToWriter
+    );
+  }
+  f = message.getUser();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getCreateTime();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
 };
@@ -297,6 +325,61 @@ proto.products.Event.prototype.clearProduct = function() {
  */
 proto.products.Event.prototype.hasProduct = function() {
   return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional string user = 5;
+ * @return {string}
+ */
+proto.products.Event.prototype.getUser = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.products.Event} returns this
+ */
+proto.products.Event.prototype.setUser = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional google.protobuf.Timestamp create_time = 6;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.products.Event.prototype.getCreateTime = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 6));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.products.Event} returns this
+*/
+proto.products.Event.prototype.setCreateTime = function(value) {
+  return jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.products.Event} returns this
+ */
+proto.products.Event.prototype.clearCreateTime = function() {
+  return this.setCreateTime(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.products.Event.prototype.hasCreateTime = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 

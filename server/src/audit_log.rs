@@ -2,8 +2,7 @@ use std::pin::Pin;
 
 use futures_util::TryStreamExt;
 use tokio::stream::Stream;
-use tokio::sync::broadcast;
-use tokio::sync::broadcast::RecvError;
+use tokio::sync::broadcast::{self, RecvError};
 use tonic::{Request, Response, Status};
 use tonic_grpc_web::GrpcWeb;
 

@@ -11,8 +11,19 @@ interface Props {
   onProductDeleted: (id: string) => void;
 }
 
+const eventDescription = (event: Event) => {
+  const action = event.getAction() === Action.CREATED ? "created" : "deleted";
+
+  const subject =
+    event.getAction() === Action.CREATED
+      ? event.getProduct()!.getName()
+      : event.getProductId().substr(0, 4);
+
+  return `${event.getUser()} ${action} ${subject} `;
+};
+
 export const AuditLog: FC<Props> = ({ onProductCreated, onProductDeleted }) => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [stream, setStream] = useState<ClientReadableStream<Event> | null>(
     null
   );
@@ -28,28 +39,31 @@ export const AuditLog: FC<Props> = ({ onProductCreated, onProductDeleted }) => {
     stream?.on("data", (event: Event) => {
       switch (event.getAction()) {
         case Action.CREATED:
-          const product = event.getProduct()!;
-          setMessages((prev) => [`${product.getName()} created`, ...prev]);
-          created(product);
+          setEvents((prev) => [event, ...prev]);
+          created(event.getProduct()!);
           break;
         case Action.DELETED:
-          const id = event.getProductId();
-          setMessages((prev) => [`${id.substr(0, 4)} deleted`, ...prev]);
-          deleted(id);
+          setEvents((prev) => [event, ...prev]);
+          deleted(event.getProductId());
           break;
       }
     });
   }, [stream, created, deleted]);
 
   return (
-    <table>
-      <tbody>
-        {messages.map((msg, idx) => (
-          <tr key={idx}>
-            <td>{msg}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="events">
+      {events.length ? (
+        events.map((event) => (
+          <div key={event.getId()} className="event">
+            <p className="mute">
+              {event.getCreateTime()?.toDate().toLocaleTimeString()}
+            </p>
+            <p>{eventDescription(event)}</p>
+          </div>
+        ))
+      ) : (
+        <p>No recent activity</p>
+      )}
+    </div>
   );
 };

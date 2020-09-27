@@ -1,5 +1,6 @@
 import * as jspb from 'google-protobuf'
 
+import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
 
 export class Empty extends jspb.Message {
@@ -23,6 +24,11 @@ export class Product extends jspb.Message {
   getName(): string;
   setName(value: string): Product;
 
+  getCreateTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreateTime(value?: google_protobuf_timestamp_pb.Timestamp): Product;
+  hasCreateTime(): boolean;
+  clearCreateTime(): Product;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Product.AsObject;
   static toObject(includeInstance: boolean, msg: Product): Product.AsObject;
@@ -35,6 +41,7 @@ export namespace Product {
   export type AsObject = {
     id: string,
     name: string,
+    createTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 }
 
@@ -73,8 +80,10 @@ export namespace ListProductsResponse {
 }
 
 export class CreateProductRequest extends jspb.Message {
-  getName(): string;
-  setName(value: string): CreateProductRequest;
+  getProduct(): Product | undefined;
+  setProduct(value?: Product): CreateProductRequest;
+  hasProduct(): boolean;
+  clearProduct(): CreateProductRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateProductRequest.AsObject;
@@ -86,7 +95,7 @@ export class CreateProductRequest extends jspb.Message {
 
 export namespace CreateProductRequest {
   export type AsObject = {
-    name: string,
+    product?: Product.AsObject,
   }
 }
 

@@ -76,28 +76,28 @@ export class ProductServiceClient {
   }
 
   methodInfoCreateProduct = new grpcWeb.AbstractClientBase.MethodInfo(
-    products_pb.Product,
+    products_pb.Empty,
     (request: products_pb.CreateProductRequest) => {
       return request.serializeBinary();
     },
-    products_pb.Product.deserializeBinary
+    products_pb.Empty.deserializeBinary
   );
 
   createProduct(
     request: products_pb.CreateProductRequest,
-    metadata: grpcWeb.Metadata | null): Promise<products_pb.Product>;
+    metadata: grpcWeb.Metadata | null): Promise<products_pb.Empty>;
 
   createProduct(
     request: products_pb.CreateProductRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.Error,
-               response: products_pb.Product) => void): grpcWeb.ClientReadableStream<products_pb.Product>;
+               response: products_pb.Empty) => void): grpcWeb.ClientReadableStream<products_pb.Empty>;
 
   createProduct(
     request: products_pb.CreateProductRequest,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.Error,
-               response: products_pb.Product) => void) {
+               response: products_pb.Empty) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +

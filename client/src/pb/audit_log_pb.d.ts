@@ -1,5 +1,6 @@
 import * as jspb from 'google-protobuf'
 
+import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 import * as products_pb from './products_pb';
 
 
@@ -18,6 +19,14 @@ export class Event extends jspb.Message {
   hasProduct(): boolean;
   clearProduct(): Event;
 
+  getUser(): string;
+  setUser(value: string): Event;
+
+  getCreateTime(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreateTime(value?: google_protobuf_timestamp_pb.Timestamp): Event;
+  hasCreateTime(): boolean;
+  clearCreateTime(): Event;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Event.AsObject;
   static toObject(includeInstance: boolean, msg: Event): Event.AsObject;
@@ -32,6 +41,8 @@ export namespace Event {
     action: Action,
     productId: string,
     product?: products_pb.Product.AsObject,
+    user: string,
+    createTime?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 }
 
