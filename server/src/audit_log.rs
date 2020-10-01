@@ -4,7 +4,7 @@ use futures_util::TryStreamExt;
 use tokio::stream::Stream;
 use tokio::sync::broadcast::{self, RecvError};
 use tonic::{Request, Response, Status};
-use tonic_grpc_web::GrpcWeb;
+use tonic_web::GrpcWeb;
 
 use crate::pb::audit_log_service_server::{AuditLogService, AuditLogServiceServer};
 use crate::pb::{Event, SubscribeRequest};

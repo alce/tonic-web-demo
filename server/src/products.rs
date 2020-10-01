@@ -7,7 +7,7 @@ use prost_types::Timestamp;
 use tokio::sync::mpsc;
 use tonic::metadata::MetadataMap;
 use tonic::{Request, Response, Status};
-use tonic_grpc_web::GrpcWeb;
+use tonic_web::GrpcWeb;
 use uuid::Uuid;
 
 use crate::pb::product_service_server::{ProductService, ProductServiceServer};
