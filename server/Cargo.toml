@@ -5,9 +5,8 @@ authors = ["Juan Alvarez <j@yabit.io>"]
 edition = "2018"
 
 [dependencies]
-#tonic = { git = "https://github.com/alce/tonic.git", branch = "grpc-web" }
-tonic = { path = "../../tonic/tonic" }
-tonic-web = { path = "../../tonic/tonic-web" }
+tonic = { git = "https://github.com/alce/tonic.git", branch = "grpc-web" }
+tonic-web = { git = "https://github.com/alce/tonic.git", branch = "grpc-web" }
 tokio = { version = "0.2.22", features = ["full"] }
 prost = "0.6.1"
 futures-util = "0.3.5"

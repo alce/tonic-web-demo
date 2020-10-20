@@ -7,7 +7,6 @@ use prost_types::Timestamp;
 use tokio::sync::mpsc;
 use tonic::metadata::MetadataMap;
 use tonic::{Request, Response, Status};
-use tonic_web::GrpcWeb;
 use uuid::Uuid;
 
 use crate::pb::product_service_server::{ProductService, ProductServiceServer};
@@ -127,6 +126,6 @@ impl ProductService for Products {
     }
 }
 
-pub fn service(tx: mpsc::Sender<ProductEvent>) -> GrpcWeb<ProductServiceServer<Products>> {
-    GrpcWeb::new(ProductServiceServer::new(Products::new(tx)))
+pub fn service(tx: mpsc::Sender<ProductEvent>) -> ProductServiceServer<Products> {
+    ProductServiceServer::new(Products::new(tx))
 }

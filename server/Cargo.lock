@@ -833,6 +833,7 @@ dependencies = [
 [[package]]
 name = "tonic"
 version = "0.3.1"
+source = "git+https://github.com/alce/tonic.git?branch=grpc-web#002fb4de156e9af3a66d898b4dced8ec44b102d8"
 dependencies = [
  "async-stream",
  "async-trait",
@@ -861,6 +862,7 @@ dependencies = [
 [[package]]
 name = "tonic-web"
 version = "0.1.0"
+source = "git+https://github.com/alce/tonic.git?branch=grpc-web#002fb4de156e9af3a66d898b4dced8ec44b102d8"
 dependencies = [
  "base64",
  "bytes",
@@ -870,6 +872,7 @@ dependencies = [
  "hyper",
  "tonic",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]
