@@ -34,11 +34,15 @@ and the React app, then start them again:
     cd server && cargo run -- --use_tls
     cd client && REACT_APP_BACKEND_SCHEME=https yarn start
     
+If you inspect the network tab, you'll see the OPTIONS and POST requests to the tonic server will use the h2 protocol.
+    
 The server uses a self signed certificate, so your browser may refuse to connect. You can either bypass the browser
 warning if prompted, or create your own certificates with [mkcert], for example.
 
     cd server/data
     mkcert -install
     mkcert localhost
+    
+This will create a local CA your browser will trust.
 
 [mkcert]: https://github.com/FiloSottile/mkcert
