@@ -30,8 +30,8 @@ impl AuditLogService for AuditLog {
     }
 }
 
-fn internal_error(_: RecvError) -> Status {
-    Status::internal("no can do")
+fn internal_error(e: RecvError) -> Status {
+    Status::internal(format!("{:?}", e))
 }
 
 pub fn service(sender: broadcast::Sender<Event>) -> AuditLogServiceServer<AuditLog> {

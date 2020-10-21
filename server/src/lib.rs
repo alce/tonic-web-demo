@@ -2,7 +2,7 @@ use std::time::SystemTime;
 
 use prost_types::Timestamp;
 use tokio::sync::{broadcast, mpsc};
-use tonic::transport::Server;
+use tonic::transport::{Identity, Server, ServerTlsConfig};
 use tracing::{error, info};
 use uuid::Uuid;
 
@@ -13,7 +13,7 @@ mod audit_log;
 mod pb;
 mod products;
 
-pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
+pub async fn run(use_tls: bool) -> Result<(), Box<dyn std::error::Error>> {
     let (btx, _) = broadcast::channel(2);
 
     let (tx, mut rx) = mpsc::channel::<ProductEvent>(2);
@@ -54,10 +54,19 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
     let audit_log = config.enable(audit_log::service(btx));
     let products = config.enable(products::service(tx));
 
-    info!("listening on {}", addr);
+    let mut builder = Server::builder();
 
-    Server::builder()
-        .accept_http1(true)
+    if use_tls {
+        let cert = tokio::fs::read("data/localhost.pem").await?;
+        let key = tokio::fs::read("data/localhost-key.pem").await?;
+        let identity = Identity::from_pem(cert, key);
+        builder = builder.tls_config(ServerTlsConfig::new().identity(identity))?;
+    }
+
+    info!(tls = use_tls, "listening on {}", addr);
+
+    builder
+        .accept_http1(!use_tls)
         .add_service(audit_log)
         .add_service(products)
         .serve(addr)

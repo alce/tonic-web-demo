@@ -4,7 +4,8 @@ import { Action, Event, SubscribeRequest } from "./pb/audit_log_pb";
 import { AuditLogServiceClient } from "./pb/Audit_logServiceClientPb";
 import { Product } from "./pb/products_pb";
 
-const client = new AuditLogServiceClient("http://localhost:9999");
+const scheme = process.env.REACT_APP_BACKEND_SCHEME || 'http';
+const client = new AuditLogServiceClient(`${scheme}://localhost:9999`);
 
 interface Props {
   onProductCreated: (product: Product) => void;

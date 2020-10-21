@@ -11,7 +11,8 @@ import {
 import { ProductServiceClient } from "./pb/ProductsServiceClientPb";
 import { ProductList } from "./ProductList";
 
-const client = new ProductServiceClient("http://localhost:9999");
+const scheme = process.env.REACT_APP_BACKEND_SCHEME || 'http';
+const client = new ProductServiceClient(`${scheme}://localhost:9999`);
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
