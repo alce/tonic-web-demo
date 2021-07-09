@@ -25,15 +25,14 @@ const eventDescription = (event: Event) => {
 
 export const AuditLog: FC<Props> = ({ onProductCreated, onProductDeleted }) => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [stream, setStream] = useState<ClientReadableStream<Event> | null>(
-    null
-  );
+  const [stream, setStream] = useState<ClientReadableStream<Event>>();
 
-  const created = useCallback(onProductCreated, []);
-  const deleted = useCallback(onProductDeleted, []);
+  const created = useCallback(onProductCreated, [onProductCreated]);
+  const deleted = useCallback(onProductDeleted, [onProductDeleted]);
 
   useEffect(() => {
-    setStream(client.subscribe(new SubscribeRequest()));
+    const call = client.subscribe(new SubscribeRequest());
+    setStream(call as ClientReadableStream<Event>);
   }, []);
 
   useEffect(() => {
