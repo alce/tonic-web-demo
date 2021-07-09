@@ -37,7 +37,7 @@ impl Products {
     }
 
     async fn emit(&self, event: ProductEvent) {
-        let mut tx = self.tx.clone();
+        let tx = self.tx.clone();
         tx.send(event).await.unwrap();
     }
 

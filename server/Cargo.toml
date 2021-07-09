@@ -15,4 +15,4 @@ tracing = "0.1.26"
 tracing-subscriber = "0.2.19"
 uuid = { version = "0.8", features = ["v4"] }
 structopt = "0.3.22"
-tokio-stream = "0.1.7"
+tokio-stream = { version = "0.1.7", features = ["sync"] }

@@ -1,12 +1,14 @@
 use std::pin::Pin;
 
-use futures_util::TryStreamExt;
+use tokio::sync::broadcast;
+use tokio_stream::wrappers::BroadcastStream;
 use tokio_stream::Stream;
-use tokio::sync::broadcast::{self, RecvError};
 use tonic::{Request, Response, Status};
 
 use crate::pb::audit_log_service_server::{AuditLogService, AuditLogServiceServer};
 use crate::pb::{Event, SubscribeRequest};
+use futures_util::TryStreamExt;
+use tokio_stream::wrappers::errors::BroadcastStreamRecvError;
 
 pub struct AuditLog {
     sender: broadcast::Sender<Event>,
@@ -20,17 +22,13 @@ impl AuditLogService for AuditLog {
         &self,
         _req: Request<SubscribeRequest>,
     ) -> Result<Response<Self::SubscribeStream>, Status> {
-        let stream = self
-            .sender
-            .subscribe()
-            .into_stream()
-            .map_err(internal_error);
+        let stream = BroadcastStream::new(self.sender.subscribe()).map_err(internal_error);
 
         Ok(Response::new(Box::pin(stream)))
     }
 }
 
-fn internal_error(e: RecvError) -> Status {
+fn internal_error(e: BroadcastStreamRecvError) -> Status {
     Status::internal(format!("{:?}", e))
 }
 
