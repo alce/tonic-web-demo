@@ -1,7 +1,7 @@
 use std::pin::Pin;
 
 use futures_util::TryStreamExt;
-use tokio::stream::Stream;
+use tokio_stream::Stream;
 use tokio::sync::broadcast::{self, RecvError};
 use tonic::{Request, Response, Status};
 
